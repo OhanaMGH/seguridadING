@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verificación de seguridad – UV</title>
+
+  <!-- Estilo profesional, colores neutros con acento verde -->
+  <style>
+    :root{
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --accent:#1b6b3a; /* verde institucional (ajustable) */
+      --muted:#6b7280;
+      --shadow: 0 6px 18px rgba(19,23,34,0.08);
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg, #eef3ef 0%, var(--bg) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .container{
+      width:100%;
+      max-width:820px;
+      background:var(--card);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    .header{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .logo{
+      width:72px;
+      height:72px;
+      border-radius:8px;
+      background:linear-gradient(135deg,var(--accent), #2e8d52);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:20px;
+      flex-shrink:0;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+    }
+    .title h1{
+      margin:0;
+      font-size:20px;
+      color:#0f1724;
+      letter-spacing:0.2px;
+    }
+    .title p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .body{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1fr 340px;
+      gap:20px;
+    }
+
+    .left{
+      color:#0f1724;
+      line-height:1.5;
+    }
+    .left h2{
+      margin-top:0;
+      font-size:18px;
+      color:var(--accent);
+    }
+    .left p{margin:8px 0 12px;color:var(--muted)}
+    .note{
+      background:#f3faf2;
+      border-left:4px solid var(--accent);
+      padding:12px;
+      border-radius:6px;
+      color:#064e2d;
+      font-size:13px;
+    }
+
+    .card{
+      background:#fbfdff;
+      border-radius:10px;
+      padding:20px;
+      box-shadow: 0 4px 14px rgba(16,24,40,0.04);
+    }
+    .action-title{font-size:15px;margin:0 0 8px;color:#0f1724}
+    .action-desc{font-size:13px;color:var(--muted);margin:0 0 18px}
+    .btn{
+      display:inline-block;
+      width:100%;
+      text-align:center;
+      background:var(--accent);
+      color:white;
+      border:none;
+      padding:12px 16px;
+      font-size:15px;
+      border-radius:8px;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .btn:active{transform:translateY(1px)}
+    .small{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+
+    footer{margin-top:20px;text-align:center;font-size:12px;color:var(--muted)}
+    .timestamp{font-weight:600;color:#0f1724;margin-top:8px}
+
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(10,12,13,0.45);
+      z-index:50;
+    }
+    .modal.show{display:flex}
+    .modal-box{
+      background:white;
+      border-radius:10px;
+      padding:22px;
+      width:90%;
+      max-width:520px;
+      box-shadow:0 10px 30px rgba(10,12,13,0.25);
+      text-align:left;
+    }
+    .modal-box h3{margin:0 0 8px;color:var(--accent)}
+    .modal-box p{margin:0 0 12px;color:var(--muted)}
+    .modal-box .close{
+      display:inline-block;
+      margin-top:12px;
+      background:#e6e9ee;
+      color:#0f1724;
+      padding:8px 12px;
+      border-radius:8px;
+      text-decoration:none;
+    }
+
+    /* Responsive */
+    @media (max-width:780px){
+      .body{grid-template-columns:1fr}
+      .card{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="pageTitle">
+    <div class="header">
+      <div class="logo" aria-hidden="true">FEI</div>
+      <div class="title">
+        <h1 id="pageTitle">Verificación de seguridad – Universidad Veracruzana</h1>
+        <p>Departamento de Soporte Técnico • Servicio de validación</p>
+      </div>
+    </div>
+
+    <div class="body" aria-live="polite">
+      <div class="left">
+        <h2>Actualización de seguridad pendiente</h2>
+        <p>
+          Estimado(a) usuario(a), hemos detectado que su cuenta institucional requiere una verificación
+          rápida para completar la actualización de seguridad programada. Para evitar interrupciones en su acceso,
+          por favor continúe con el proceso de validación.
+        </p>
+
+        <div class="note" role="note">
+          <strong>Tiempo aproximado:</strong> 1 minuto. <br>
+          <strong>Nota importante:</strong> este proceso <em>no</em> solicita contraseñas ni información sensible.
+        </div>
+
+        <section class="info" style="margin-top:16px">
+          <h3 style="margin:8px 0;">¿Por qué se solicita esto?</h3>
+          <p style="margin:0;color:var(--muted);">Se aplica como parte de las medidas periódicas de seguridad. Si tiene dudas, contacte al área de soporte técnico por los canales oficiales.</p>
+        </section>
+
+      </div>
+
+      <aside class="card" aria-labelledby="actionTitle">
+        <h4 id="actionTitle" class="action-title">Validación de seguridad</h4>
+        <p class="action-desc">Pulse el botón para continuar con la verificación. Este ejercicio forma parte de una prueba de concientización y no solicita contraseñas.</p>
+
+        <button id="verifyBtn" class="btn" aria-describedby="actionDescription">Continuar con la verificación</button>
+
+        <div class="small" id="actionDescription">Al hacer clic se registrará su interacción y verá un mensaje informativo.</div>
+
+        <div id="result" style="display:none;margin-top:12px">
+          <div class="timestamp">Interacción registrada: <span id="tsText"></span></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Departamento de Soporte Técnico — Universidad Veracruzana · Facultad de Estadística e Informática
+    </footer>
+  </div>
+
+  <!-- Modal que se muestra tras interactuar -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-box">
+      <h3>Simulación completada</h3>
+      <p>Has interactuado con la página. Este ejercicio forma parte de una prueba interna de concientización sobre phishing. <strong>No se solicitaron ni almacenaron contraseñas ni datos personales.</strong></p>
+      <p>Recomendaciones rápidas:</p>
+      <ul style="color:var(--muted);margin-top:8px">
+        <li>Verifica siempre la dirección del remitente antes de abrir enlaces.</li>
+        <li>No compartas contraseñas ni códigos por correo o llamada.</li>
+        <li>Reporta correos sospechosos al área de soporte.</li>
+      </ul>
+
+      <a href="#" id="closeModal" class="close" role="button">Cerrar</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('verifyBtn');
+      const modal = document.getElementById('modal');
+      const closeModal = document.getElementById('closeModal');
+      const tsText = document.getElementById('tsText');
+      const result = document.getElementById('result');
+
+      function showModal(){
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden','false');
+      }
+      function hideModal(){
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden','true');
+      }
+
+      function recordInteraction(){
+        const ts = new Date();
+        const iso = ts.toISOString();
+        // Guardado local (no envía datos externos).
+        // Esto facilita pruebas sin backend: la info queda en localStorage del navegador.
+        const record = { clickedAt: iso, userAgent: navigator.userAgent };
+        // Guardamos múltiples intentos en un array
+        try {
+          const prev = JSON.parse(localStorage.getItem('phishSimRecords') || '[]');
+          prev.push(record);
+          localStorage.setItem('phishSimRecords', JSON.stringify(prev));
+        } catch(e){
+          // si localStorage falla, no hacemos nada crítico.
+        }
+        // Mostrar timestamp visible al usuario (opcional)
+        tsText.textContent = new Date(iso).toLocaleString();
+        result.style.display = 'block';
+      }
+
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        // registrar la interacción localmente
+        recordInteraction();
+        // mostrar modal
+        showModal();
+
+        // Si deseas enviar la interacción a un servidor para registrar (OPTIONAL),
+        // reemplaza 'https://tu-endpoint-seguro.example/registro' por tu endpoint y descomenta el fetch:
+        /*
+        fetch('https://tu-endpoint-seguro.example/registro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clickedAt: new Date().toISOString(), note: 'simulated click' })
+        }).catch(()=>{/* manejar errores si se desea */ /*});
+        */
+      });
+
+      closeModal.addEventListener('click', function(e){
+        e.preventDefault();
+        hideModal();
+      });
+
+      // accesibilidad: cerrar modal con Escape
+      document.addEventListener('keydown', function(ev){
+        if(ev.key === 'Escape' && modal.classList.contains('show')){
+          hideModal();
+        }
+      });
+
+      // Muestra si ya había interacción previa (útil para pruebas)
+      try {
+        const prev = JSON.parse(localStorage.getItem('phishSimRecords') || '[]');
+        if(prev.length){
+          const last = prev[prev.length - 1];
+          tsText.textContent = new Date(last.clickedAt).toLocaleString();
+          result.style.display = 'block';
+        }
+      } catch(e){}
+    })();
+  </script>
+</body>
+</html>
