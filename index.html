@@ -244,24 +244,36 @@
         modal.setAttribute('aria-hidden','true');
       }
 
-      function recordInteraction(){
-        const ts = new Date();
-        const iso = ts.toISOString();
-        // Guardado local (no envía datos externos).
-        // Esto facilita pruebas sin backend: la info queda en localStorage del navegador.
-        const record = { clickedAt: iso, userAgent: navigator.userAgent };
-        // Guardamos múltiples intentos en un array
-        try {
-          const prev = JSON.parse(localStorage.getItem('phishSimRecords') || '[]');
-          prev.push(record);
-          localStorage.setItem('phishSimRecords', JSON.stringify(prev));
-        } catch(e){
-          // si localStorage falla, no hacemos nada crítico.
-        }
-        // Mostrar timestamp visible al usuario (opcional)
-        tsText.textContent = new Date(iso).toLocaleString();
-        result.style.display = 'block';
-      }
+     async function recordInteraction() {
+  const ts = new Date().toISOString();
+  const record = {
+    timestamp: ts,
+    userAgent: navigator.userAgent
+  };
+
+  // Guarda local (opcional)
+  try {
+    const prev = JSON.parse(localStorage.getItem("phishSimRecords") || "[]");
+    prev.push(record);
+    localStorage.setItem("phishSimRecords", JSON.stringify(prev));
+  } catch (e) {}
+
+  // Enviar al backend
+  try {
+    await fetch("/api/registro", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record)
+    });
+  } catch (err) {
+    console.error("Error enviando registro:", err);
+  }
+
+  // Mostrar timestamp
+  tsText.textContent = new Date(ts).toLocaleString();
+  result.style.display = "block";
+}
+
 
       btn.addEventListener('click', function(e){
         e.preventDefault();
@@ -269,16 +281,6 @@
         recordInteraction();
         // mostrar modal
         showModal();
-
-        // Si deseas enviar la interacción a un servidor para registrar (OPTIONAL),
-        // reemplaza 'https://tu-endpoint-seguro.example/registro' por tu endpoint y descomenta el fetch:
-        /*
-        fetch('https://tu-endpoint-seguro.example/registro', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ clickedAt: new Date().toISOString(), note: 'simulated click' })
-        }).catch(()=>{/* manejar errores si se desea */ /*});
-        */
       });
 
       closeModal.addEventListener('click', function(e){
