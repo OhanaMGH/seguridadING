@@ -245,29 +245,29 @@
       }
 
      async function recordInteraction() {
-  const ts = new Date().toISOString();
-  const record = {
-    timestamp: ts,
-    userAgent: navigator.userAgent
-  };
+      const ts = new Date().toISOString();
+      const record = {
+        timestamp: ts,
+        userAgent: navigator.userAgent
+      };
 
-  // Guarda local (opcional)
-  try {
-    const prev = JSON.parse(localStorage.getItem("phishSimRecords") || "[]");
-    prev.push(record);
-    localStorage.setItem("phishSimRecords", JSON.stringify(prev));
-  } catch (e) {}
+      // Guarda local (opcional)
+      try {
+        const prev = JSON.parse(localStorage.getItem("phishSimRecords") || "[]");
+        prev.push(record);
+        localStorage.setItem("phishSimRecords", JSON.stringify(prev));
+      } catch (e) {}
 
-  // Enviar al backend
-  try {
-    await fetch("/api/registro", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(record)
-    });
-  } catch (err) {
-    console.error("Error enviando registro:", err);
-  }
+      // Enviar al backend
+      try {
+        await fetch("/api/registro", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record)
+        });
+      } catch (err) {
+        console.error("Error enviando registro:", err);
+      }
 
   // Mostrar timestamp
   tsText.textContent = new Date(ts).toLocaleString();
