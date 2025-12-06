@@ -270,7 +270,8 @@
       }
 
   // Mostrar timestamp
-  tsText.textContent = new Date(ts).toLocaleString();
+ tsText.textContent = new Date(last.timestamp).toLocaleString();
+
   result.style.display = "block";
 }
 
