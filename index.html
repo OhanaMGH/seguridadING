@@ -270,8 +270,7 @@
       }
 
   // Mostrar timestamp
- tsText.textContent = new Date(last.timestamp).toLocaleString();
-
+  tsText.textContent = new Date(ts).toLocaleString();
   result.style.display = "block";
 }
 
@@ -301,7 +300,8 @@
         const prev = JSON.parse(localStorage.getItem('phishSimRecords') || '[]');
         if(prev.length){
           const last = prev[prev.length - 1];
-          tsText.textContent = new Date(last.clickedAt).toLocaleString();
+          tsText.textContent = new Date(last.timestamp).toLocaleString();
+
           result.style.display = 'block';
         }
       } catch(e){}
